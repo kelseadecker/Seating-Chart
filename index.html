@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Meta tags, title, and styles go here -->
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #333;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 990px;
+        width: 100%;
+        flex-grow: 1;
+        position: relative;
+      }
+
+      h1 {
+        margin-bottom: 20px;
+        background-color: #333;
+        color: white;
+        padding: 10px;
+        text-align: center;
+      }
+
+      .seat-picker {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+      }
+
+      .section {
+        display: grid;
+        gap: 5px;
+        padding: 50px;
+      }
+
+      .seat {
+        width: 30px;
+        height: 30px;
+        border: 1px solid #ccc;
+        text-align: center;
+        line-height: 30px;
+        cursor: pointer;
+        font-size: 12px;
+        background-color: #f2f2f2;
+      }
+
+      .selected {
+        background-color: #ff5733;
+        color: white;
+      }
+
+      .unavailable {
+        background-color: transparent;
+        cursor: not-allowed;
+        color: transparent;
+      }
+
+      #section1,
+      #section3 {
+        transform: rotate(3deg); 
+      }
+
+      #section1 {
+        grid-template-columns: repeat(6, 30px);
+      }
+
+      #section2 {
+        grid-template-columns: repeat(14, 30px);
+      }
+
+      #section3 {
+        grid-template-columns: repeat(6, 30px);
+        transform: rotate(-3deg); 
+      }
+
+      .stage {
+        width: 100%;
+        height: 50px;
+        background-color: #222;
+        margin-top: 20px;
+        position: absolute;
+        top: 55px;
+        border-radius: 50% 50% 0 0;
+      }
+
+      footer {
+        margin-top: auto;
+        text-align: center;
+        color: white;
+        width: 100%;
+      }
+
+      /* Style for the Buy Ticket button */
+      button {
+        background-color: #ff5733;
+        color: white;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-top: 20px; 
+      }
+
+      /* Style for ticket prices */
+      .ticket-prices {
+        margin-top: 20px;
+        color: white;
+        display: flex;
+        justify-content: space-around;
+        margin: 0 30px;
+      }
+
+      /* Adjusted the style for each ticket price */
+      .ticket-prices p {
+        margin: 0 20px; 
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Orchestra Seats</h1>
+
+      <div class="seat-picker">
+        <div class="section" id="section1"></div>
+        <div class="section" id="section2"></div>
+        <div class="section" id="section3"></div>
+      </div>
+
+      <div class="stage"></div>
+    </div>
+
+    <!-- Ticket prices -->
+    <div class="ticket-prices">
+      <p>General Ticket Price: $30</p>
+    </div>
+
+    <!-- Display total cost -->
+    <p>Total Cost: $<span id="totalCost">0</span></p>
+
+    <footer>
+      <button onclick="buyTicket()">Buy Ticket</button>
+      <p>Total Seats: <span id="totalSeats">284</span></p>
+      <p>Purchased Tickets: <span id="purchasedTickets">0</span></p>
+    </footer>
+
+    <script>
+      const createSeats = (containerId, numRows, seatsPerRow, sectionName) => {
+        const container = document.getElementById(containerId);
+        let availableSeats = 0;
+
+        for (let rowIndex = 1; rowIndex <= numRows; rowIndex++) {
+          for (let seatIndex = 1; seatIndex <= seatsPerRow; seatIndex++) {
+            const seat = document.createElement("div");
+            seat.className = "seat";
+
+            const seatName = sectionName + "-" + seatIndex;
+            seat.textContent = seatName;
+
+            seat.addEventListener("click", () => {
+              if (
+                !seat.classList.contains("unavailable") &&
+                !seat.classList.contains("selected")
+              ) {
+                seat.classList.toggle("selected");
+                updateCounter(--availableSeats);
+              }
+            });
+
+            availableSeats++;
+            container.appendChild(seat);
+          }
+        }
+
+        return availableSeats;
+      };
+
+      const updateCounter = (availableSeats) => {
+        const selectedSeats = document.querySelectorAll(".selected").length;
+        document.getElementById("totalSeats").textContent = 284 - selectedSeats;
+        document.getElementById("purchasedTickets").textContent = selectedSeats;
+
+        // Update total cost
+        const generalTicketPrice = 30;
+        let totalCost = selectedSeats * generalTicketPrice;
+
+        document.getElementById("totalCost").textContent = totalCost;
+      };
+
+      const buyTicket = () => {
+        const selectedSeats = document.querySelectorAll(".selected").length;
+        const totalCost = document.getElementById("totalCost").textContent;
+
+        alert(
+          `You've successfully purchased ${selectedSeats} ticket(s) for a total cost of $${totalCost}.`
+        );
+        window.location.href = "purchase.html";
+      };
+
+      const totalAvailableSeats =
+        createSeats("section1", 12, 6, "A") +
+        createSeats("section2", 12, 14, "B") +
+        createSeats("section3", 12, 6, "C");
+
+      updateCounter(totalAvailableSeats);
+    </script>
+  </body>
+</html>

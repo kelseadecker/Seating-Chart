@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Confirmation</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #333;
+        color: white;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 600px;
+        width: 100%;
+        position: relative;
+        padding: 20px;
+        box-sizing: border-box;
+        border-radius: 10px;
+        background-color: #444;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        text-align: center;
+      }
+
+      h1 {
+        background-color: #222;
+        color: white;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 10px 10px 0 0;
+      }
+
+      p {
+        margin: 10px 0;
+      }
+
+      strong {
+        color: #ff5733;
+      }
+
+      span {
+        color: white;
+      }
+
+      button {
+        background-color: #ff5733;
+        color: white;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-top: 20px;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #d13c1e;
+      }
+    </style>
+    <!-- Add any additional meta tags or styles here -->
+  </head>
+  <body>
+    <div class="container">
+      <h1>Thank You for Your Purchase!</h1>
+      <p>Your transaction was successful. Here are the details:</p>
+
+      <div>
+        <strong>Transaction ID:</strong> <span id="transactionId"></span>
+      </div>
+
+      <div>
+        <strong>Selected Seats:</strong> <span id="selectedSeats"></span>
+      </div>
+
+      <p>We hope you enjoy the concert!</p>
+
+      <button onclick="goBack()">Go Back</button>
+    </div>
+  </body>
+  <script>
+    // Function to go back to the main page
+    const goBack = () => {
+      window.location.href = "index.html";
+    };
+
+    // Retrieve data from the URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const transactionId = urlParams.get("transactionId");
+    const selectedSeats = urlParams.get("selectedSeats");
+
+    // Display the data on the confirmation page
+    document.getElementById("transactionId").textContent = transactionId;
+    document.getElementById("selectedSeats").textContent = selectedSeats;
+  </script>
+</html>

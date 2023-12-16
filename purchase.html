@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Meta tags, title, and styles go here -->
+
+    <!-- Include the Font Awesome CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      integrity="sha512-Qqz3gBxJMPi+Cw8r0ex5QDl5LZc7jIS7hG6/rd24KQdmdx0B5SEsMoo5oLvxWqw8dcZx8eEjFb3YsVlnB2jfeg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #333;
+        color: white;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 600px;
+        width: 100%;
+        position: relative;
+        padding: 20px;
+        box-sizing: border-box;
+        border-radius: 10px;
+        background-color: #444;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      }
+
+      h1 {
+        margin-bottom: 20px;
+        background-color: #222;
+        color: white;
+        padding: 10px;
+        text-align: center;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      label {
+        color: #ff5733;
+      }
+
+      input {
+        padding: 8px;
+        border: 1px solid #555;
+        border-radius: 5px;
+        background-color: #666;
+        color: white;
+      }
+
+      .seat-picker {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        margin-top: 20px;
+      }
+
+      .section {
+        display: grid;
+        gap: 5px;
+        padding: 10px;
+      }
+
+      .payment-icons {
+        font-size: 30px;
+        margin-top: 20px;
+        color: #ff5733;
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+      }
+
+      button {
+        background-color: #ff5733;
+        color: white;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Secure Ticket Purchase</h1>
+
+      <!-- Ticket selection form -->
+      <form id="ticketForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required />
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required />
+
+        <label for="creditCard">Credit Card Number:</label>
+        <input type="text" id="creditCard" name="creditCard" pattern="[0-9]{16}" title="Enter a 16-digit credit card number" required />
+
+        <!-- Additional credit card information -->
+        <label for="expirationDate">Expiration Date (MM/YY):</label>
+        <input type="text" id="expirationDate" name="expirationDate" pattern="(0[1-9]|1[0-2])\/\d{2}" title="Enter a valid expiration date in MM/YY format" required />
+
+        <label for="cvc">CVC:</label>
+        <input type="text" id="cvc" name="cvc" pattern="\d{3,4}" title="Enter a valid CVC code" required />
+
+        <div class="seat-picker">
+          <div class="section" id="section1"></div>
+          <div class="section" id="section2"></div>
+          <div class="section" id="section3"></div>
+        </div>
+
+        <!-- Payment icons -->
+        <div class="payment-icons">
+          <i class="fab fa-cc-visa"></i>
+          <i class="fab fa-cc-mastercard"></i>
+          <i class="fab fa-cc-amex"></i>
+          <!-- Add more payment method icons as needed -->
+        </div>
+
+        <button type="button" onclick="purchaseTickets()">
+          Purchase Tickets
+        </button>
+      </form>
+    </div>
+
+    <script>
+      // Additional JavaScript for ticket purchase logic goes here
+
+      // Function to handle form submission
+      const purchaseTickets = () => {
+        // Retrieve form data
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const creditCard = document.getElementById("creditCard").value;
+        const expirationDate = document.getElementById("expirationDate").value;
+        const cvc = document.getElementById("cvc").value;
+
+        // Validate the form data (you can add more validation as needed)
+        if (!name || !email || !creditCard || !expirationDate || !cvc) {
+          alert("Please fill in all required fields.");
+          return;
+        }
+
+        // Your ticket purchase logic here
+        // For now, let's display an alert with the entered information
+        alert(
+          `Ticket Purchase Details:\nName: ${name}\nEmail: ${email}\nCredit Card: ${creditCard}\nExpiration Date: ${expirationDate}\nCVC: ${cvc}`
+        );
+
+        // Optionally, you can redirect the user to a confirmation page
+        window.location.href = "confirmation.html";
+      };
+
+      // Function to go back to the main page
+      const goBack = () => {
+        window.location.href = "index.html";
+      };
+    </script>
+  </body>
+</html>
